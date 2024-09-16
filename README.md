@@ -12,6 +12,7 @@ A storage unit system for fivem servers. Buy and store you legal/illegal items.
 - Unit Password
 - Cutting Power (robable units)
 - Resetting Password (owner only)
+- Units Limit for players
 
 
 ## Screenshots
