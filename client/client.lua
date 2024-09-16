@@ -32,11 +32,13 @@ local function openUnit(unit)
     
     local password = input[1]
 
-    if password == unit.password then
-        exports.ox_inventory:openInventory('stash', 'storageUnit:'..unit.id)
-    else
+    local success = lib.callback.await('kevin-storageunits:server:validateStorageUnitPassword', false, unit.id, password)
+    if not success then
         showNotify('Invalid Password', 'error')
+        return
     end
+
+    exports.ox_inventory:openInventory('stash', 'storageUnit:'..unit.id)
 end
 
 local function cutUnitKeyPadPower(unit)
