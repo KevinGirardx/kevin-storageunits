@@ -1,6 +1,16 @@
 -- This file is used to handle the different UI systems for kevin Scripts
 local config = require 'shared.config'
 
+function getPlayerCitizenId()
+    if GetResourceState('qbx_core') == 'started' then
+        return exports.qbx_core:GetPlayerData().citizenid
+    elseif GetResourceState('qb-core') == 'started' then
+        return exports['qb-core']:GetCoreObject().Player:GetUser().citizenid
+    end
+
+    return nil
+end
+
 function showTextUi(text) -- feel free to implement your own text ui system here
     if config.textUi == 'ox' then
         lib.showTextUI(text, { position = 'left-center' })

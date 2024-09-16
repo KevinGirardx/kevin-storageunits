@@ -1,6 +1,7 @@
 local zones = {}
 local clientUnits = {}
 
+
 local function requestUnitPurchase(unit)
     local hasUnitCost, response, type = lib.callback.await('kevin-storageunits:server:hasUnitCost', false, unit.id)
     if not hasUnitCost then
@@ -97,7 +98,7 @@ local function createUnitKeyPad(unit)
                 end
             },
             {
-                label = 'Buy Storage Unit',
+                label = 'Buy Storage Unit $'..clientUnits[unit.id].cost,
                 onSelect = function ()
                     requestUnitPurchase(unit)
                 end,
@@ -111,7 +112,7 @@ local function createUnitKeyPad(unit)
                     cutUnitKeyPadPower(unit)
                 end,
                 canInteract = function ()
-                    return clientUnits[unit.id].owned and unit.password and not clientUnits[unit.id].owner == QBX.PlayerData.citizenid
+                    return clientUnits[unit.id].owned and unit.password and not clientUnits[unit.id].owner == getPlayerCitizenId()
                 end
             },
             {
@@ -120,7 +121,7 @@ local function createUnitKeyPad(unit)
                     resetUnitPassword(unit)
                 end,
                 canInteract = function ()
-                    return clientUnits[unit.id].password == nil and clientUnits[unit.id].owned and clientUnits[unit.id].owner == QBX.PlayerData.citizenid
+                    return clientUnits[unit.id].password == nil and clientUnits[unit.id].owned and clientUnits[unit.id].owner == getPlayerCitizenId()
                 end
             }
         }

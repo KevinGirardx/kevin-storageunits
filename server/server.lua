@@ -26,6 +26,7 @@ local function setUpStorageUnits()
             owned = false,
             password = nil,
             inventory = unit.inventory,
+            cost = unit.cost,
             coords = unit.coords,
         }
         
