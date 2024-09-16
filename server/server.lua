@@ -99,6 +99,12 @@ end)
 
 RegisterNetEvent('kevin-storageunits:server:updateStorageUnit', function (data)
     if not serverUnits[data.id] then return end
+    local player = Framework:GetPlayer(source)
+    local citizenId = player.PlayerData.citizenid
+    if serverUnits[data.id].owner ~= citizenId then
+        return
+    end
+    
     serverUnits[data.id] = data.unit
 
     serverUnits[data.id].password = data.password
