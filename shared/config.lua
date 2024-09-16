@@ -8,6 +8,7 @@ return {
         distance = 3.0,
     },
 
+    unitsAllowed = 2, -- how many units can a player own
     storageUnits = {
         [1] = {
             cost = 5000,

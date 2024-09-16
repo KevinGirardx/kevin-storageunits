@@ -3,8 +3,8 @@ local clientUnits = {}
 
 
 local function requestUnitPurchase(unit)
-    local hasUnitCost, response, type = lib.callback.await('kevin-storageunits:server:hasUnitCost', false, unit.id)
-    if not hasUnitCost then
+    local validated, response, type = lib.callback.await('kevin-storageunits:server:validatePurchaseRequest', false, unit.id)
+    if not validated then
         showNotify(response, type)
         return
     end

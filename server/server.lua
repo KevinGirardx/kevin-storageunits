@@ -43,11 +43,32 @@ local function setUpStorageUnits()
     end
 end
 
-local function hasUnitCost(source, unitId)
+local function isPlayerOwnedUnitsMet(source)
+    local player = Framework:GetPlayer(source)
+    local citizenId = player.PlayerData.citizenid
+    local ownedUnits = 0
+    for unitId, unit in pairs(serverUnits) do
+        if unit.owner == citizenId then
+            ownedUnits = ownedUnits + 1
+        end
+    end
+    
+    if ownedUnits == config.unitsAllowed then
+        return true
+    end
+
+    return false
+end
+
+local function validatePurchaseRequest(source, unitId)
     if not config.storageUnits[unitId] then
         return false, 'Invalid Storage Unit', 'error'
     end
     
+    if isPlayerOwnedUnitsMet(source) then
+        return false, 'Max Units Owned', 'error'
+    end
+
     local player = Framework:GetPlayer(source)
     if player.PlayerData.money.cash < config.storageUnits[unitId].cost then
         return false, 'Insufficient Funds', 'error'
@@ -101,8 +122,8 @@ lib.callback.register('kevin-storageunits:server:getStorageUnits', function (sou
     return serverUnits
 end)
 
-lib.callback.register('kevin-storageunits:server:hasUnitCost', function (source, unitId)
-    return hasUnitCost(source, unitId)
+lib.callback.register('kevin-storageunits:server:validatePurchaseRequest', function (source, unitId)
+    return validatePurchaseRequest(source, unitId)
 end)
 
 lib.callback.register('kevin-storageunits:server:purchaseStorageUnit', function (source, unitId, password)
