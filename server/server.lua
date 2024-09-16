@@ -85,6 +85,17 @@ local function requestUnitPurchase(source, unitId, password)
     return 'Storage Unit Purchased', 'success'
 end
 
+local function validataUnitPassword(source, unitId, password)
+    local unit = serverUnits[unitId]
+    if not unit then return end
+
+    if unit.password == password then
+        return true
+    end
+
+    return false
+end
+
 lib.callback.register('kevin-storageunits:server:getStorageUnits', function (source)
     return serverUnits
 end)
@@ -95,6 +106,10 @@ end)
 
 lib.callback.register('kevin-storageunits:server:purchaseStorageUnit', function (source, unitId, password)
     return requestUnitPurchase(source, unitId, password)
+end)
+
+lib.callback.register('kevin-storageunits:server:validateStorageUnitPassword', function (source, unitId, password)
+    return validataUnitPassword(source, unitId, password)
 end)
 
 RegisterNetEvent('kevin-storageunits:server:updateStorageUnit', function (data)
