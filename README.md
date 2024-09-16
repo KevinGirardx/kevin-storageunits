@@ -1,8 +1,11 @@
 
 # Storage Units
 
-A storage unit system for fivem servers.
+A storage unit system for fivem servers. Buy and store you legal/illegal items.
 
+## Dependencies
+- Ox inventory
+- Ox lib
 
 ## Features
 
