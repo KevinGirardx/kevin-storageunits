@@ -44,8 +44,7 @@ local function setUpStorageUnits()
 end
 
 local function isPlayerOwnedUnitsMet(source)
-    local player = Framework:GetPlayer(source)
-    local citizenId = player.PlayerData.citizenid
+    local citizenId = getPlayerCitizenId(source)
     local ownedUnits = 0
     for unitId, unit in pairs(serverUnits) do
         if unit.owner == citizenId then
@@ -69,8 +68,8 @@ local function validatePurchaseRequest(source, unitId)
         return false, 'Max Units Owned', 'error'
     end
 
-    local player = Framework:GetPlayer(source)
-    if player.PlayerData.money.cash < config.storageUnits[unitId].cost then
+    local playerCash = getPlayerCash(source)
+    if playerCash < config.storageUnits[unitId].cost then
         return false, 'Insufficient Funds', 'error'
     end
 
@@ -79,8 +78,7 @@ end
 
 local function requestUnitPurchase(source, unitId, password)
     local unit = serverUnits[unitId]
-    local player = Framework:GetPlayer(source)
-    local citizenId = player.PlayerData.citizenid
+    local citizenId = getPlayerCitizenId(source)
     if not unit then
         return 'Invalid Storage Unit', 'error'
     end
@@ -136,8 +134,7 @@ end)
 
 RegisterNetEvent('kevin-storageunits:server:updateStorageUnit', function (data)
     if not serverUnits[data.id] then return end
-    local player = Framework:GetPlayer(source)
-    local citizenId = player.PlayerData.citizenid
+    local citizenId = getPlayerCitizenId(source)
     if serverUnits[data.id].owner ~= citizenId then
         return
     end
