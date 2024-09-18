@@ -5,7 +5,7 @@ function getPlayerCitizenId()
     if GetResourceState('qbx_core') == 'started' then
         return exports.qbx_core:GetPlayerData().citizenid
     elseif GetResourceState('qb-core') == 'started' then
-        return exports['qb-core']:GetCoreObject().GetPlayerData().citizenid
+        return exports['qb-core']:GetCoreObject().Functions.GetPlayerData().citizenid
     end
 
     return nil
