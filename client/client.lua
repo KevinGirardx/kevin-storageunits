@@ -112,7 +112,7 @@ local function createUnitKeyPad(unit)
                     cutUnitKeyPadPower(unit)
                 end,
                 canInteract = function ()
-                    return clientUnits[unit.id].owned and unit.password and not clientUnits[unit.id].owner == getPlayerCitizenId()
+                    return clientUnits[unit.id].owned and clientUnits[unit.id].password and clientUnits[unit.id].owner ~= getPlayerCitizenId()
                 end
             },
             {
